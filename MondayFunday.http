@@ -1,0 +1,6 @@
+@MondayFunday_HostAddress = http://localhost:5220
+
+GET {{MondayFunday_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
