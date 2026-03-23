@@ -11,7 +11,7 @@ namespace MondayFunday.Services.DummyService
 
         public string GetData()
         {
-            return "Lite dummy data";
+            return "Lite dummy datas";
         }
 
         public string GetDataById(int Id)
