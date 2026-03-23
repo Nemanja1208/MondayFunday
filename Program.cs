@@ -1,4 +1,5 @@
 
+using FluentValidation;
 using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
 using MondayFunday.Database;
@@ -6,6 +7,7 @@ using MondayFunday.Services.DummyService;
 using MondayFunday.Services.Interfaces;
 using MondayFunday.Services.ProductService;
 using Scalar.AspNetCore;
+using static MondayFunday.Validators.AllValidators;
 
 namespace MondayFunday
 {
@@ -30,6 +32,8 @@ namespace MondayFunday
             builder.Services.AddScoped<IDummyInterface, DummyServiceCRUD>();
 
             builder.Services.AddScoped<IProductInterface, ProductServiceCRUD>();
+
+            builder.Services.AddValidatorsFromAssemblyContaining<ProductValidator>();
 
             var app = builder.Build();
 
