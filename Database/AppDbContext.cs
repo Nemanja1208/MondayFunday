@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using MondayFunday.Database.DatabaseSeeder;
 using MondayFunday.Models;
 
 namespace MondayFunday.Database
@@ -18,7 +19,17 @@ namespace MondayFunday.Database
 
 
         // On model creating
-        
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            var categories = SeedData.GetCategories();
+            var products = SeedData.GetProducts(categories);
+            var reviews = SeedData.GetReviews(products);
+
+            modelBuilder.Entity<Category>().HasData(categories);
+            modelBuilder.Entity<Product>().HasData(products);
+            modelBuilder.Entity<Review>().HasData(reviews);
+        }
+
     }
 
 }
