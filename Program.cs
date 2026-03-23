@@ -1,4 +1,12 @@
 
+using Microsoft.Data.SqlClient;
+using Microsoft.EntityFrameworkCore;
+using MondayFunday.Database;
+using MondayFunday.Services.DummyService;
+using MondayFunday.Services.Interfaces;
+using MondayFunday.Services.ProductService;
+using Scalar.AspNetCore;
+
 namespace MondayFunday
 {
     public class Program
@@ -13,12 +21,23 @@ namespace MondayFunday
             // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
             builder.Services.AddOpenApi();
 
+            // Connection string
+            string connectionString = builder.Configuration.GetConnectionString("DefaultConnection")!;
+            // Database connection
+            builder.Services.AddDbContext<AppDbContext>(options =>
+                options.UseSqlServer(connectionString));
+
+            builder.Services.AddScoped<IDummyInterface, DummyServiceCRUD>();
+
+            builder.Services.AddScoped<IProductInterface, ProductServiceCRUD>();
+
             var app = builder.Build();
 
             // Configure the HTTP request pipeline.
             if (app.Environment.IsDevelopment())
             {
                 app.MapOpenApi();
+                app.MapScalarApiReference();
             }
 
             app.UseHttpsRedirection();
