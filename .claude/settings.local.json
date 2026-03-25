@@ -1,0 +1,8 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(find /c/Users/neman/source/repos/MondayFunday -maxdepth 2 -not -path */bin/* -not -path */obj/* -not -path */.vs/* -type f)",
+      "Bash(dotnet build:*)"
+    ]
+  }
+}
