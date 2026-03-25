@@ -5,6 +5,8 @@ using Microsoft.EntityFrameworkCore;
 using MondayFunday.Database;
 using MondayFunday.Services.DummyService;
 using MondayFunday.Services.Interfaces;
+using MondayFunday.Services.ExternalApiService;
+using MondayFunday.Services.OpenAiService;
 using MondayFunday.Services.ProductService;
 using Scalar.AspNetCore;
 using static MondayFunday.Validators.AllValidators;
@@ -32,6 +34,15 @@ namespace MondayFunday
             builder.Services.AddScoped<IDummyInterface, DummyServiceCRUD>();
 
             builder.Services.AddScoped<IProductInterface, ProductServiceCRUD>();
+
+            // HttpClient for JSONPlaceholder (public external API)
+            builder.Services.AddHttpClient<IExternalApiInterface, ExternalApiServiceCRUD>(client =>
+            {
+                client.BaseAddress = new Uri("https://jsonplaceholder.typicode.com/");
+            });
+
+            // HttpClient for OpenAI API
+            builder.Services.AddHttpClient<IOpenAiInterface, OpenAiServiceCRUD>();
 
             builder.Services.AddValidatorsFromAssemblyContaining<ProductValidator>();
 
